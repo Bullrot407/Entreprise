@@ -32,10 +32,6 @@ public class Entreprise {
         return null;
     }
 
-    public String listEmployeParProfession(String profession){
-        return listeEmploye.get(profession).toString();
-    }
-
     public void addEmploye(Personne personne){
         switch (personne.profession){
             case "Directeur": listeEmploye.get("Directeur").add(personne);
@@ -48,5 +44,21 @@ public class Entreprise {
         }
     }
 
---
+    public void addEmploye(Personne personne){
+        if(listeEmploye.containsKey(personne.profession)){
+            listeEmploye.get(personne.profession).add(personne);
+
+        }
+    }
+    public void controleTailleProfession(Personne personne,String profession){
+        if(listeEmploye.containsKey(personne.profession))
+            if(
+
+    }
+
+    public String listEmployeParProfession(String profession){
+        return listeEmploye.get(profession).toString();
+    }
+
+
 }
