@@ -1,8 +1,7 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Objects;
 
 public class Entreprise {
 
@@ -14,51 +13,60 @@ public class Entreprise {
     private static final int NB_MANOEUVRE = 4;
     private static final int NB_CONTREMAITRE = 1;
 
-    public HashMap <String, HashSet <Personne>> listeEmploye;
+    public HashMap<String, ArrayList<Personne>> listeEmploye;
+
     public Entreprise() {
-        this.listeEmploye = InitialisationEntreprise();
+        InitialisationEntreprise();
+        getTailleProfession();
     }
 
-    private HashMap<String, HashSet<Personne>> InitialisationEntreprise() {
-        listeEmploye = new HashMap<String, HashSet<Personne>>();
-        listeEmploye.put("Directeur", new HashSet<Personne>(NB_DIRECTEUR));
-        listeEmploye.put("Secretaire", new HashSet<Personne>(NB_SECRETAIRE));
-        listeEmploye.put("Comptable", new HashSet<Personne>(NB_COMPTABLE));
-        listeEmploye.put("Maçon Qualifié", new HashSet<Personne>(NB_MACONQUALIFIE));
-        listeEmploye.put("Maçon", new HashSet<Personne>(NB_MACON));
-        listeEmploye.put("Manoeuvre", new HashSet<Personne>(NB_MANOEUVRE));
-        listeEmploye.put("Contremaitre", new HashSet<Personne>(NB_CONTREMAITRE));
-
-        return null;
+    private void InitialisationEntreprise() {
+        listeEmploye = new HashMap<String, ArrayList<Personne>>();
+        listeEmploye.put("Directeur", new ArrayList<Personne>());
+        listeEmploye.put("Secretaire", new ArrayList<Personne>());
+        listeEmploye.put("Comptable", new ArrayList<Personne>());
+        listeEmploye.put("Maçon Qualifié", new ArrayList<Personne>());
+        listeEmploye.put("Maçon", new ArrayList<Personne>());
+        listeEmploye.put("Manoeuvre", new ArrayList<Personne>());
+        listeEmploye.put("Contremaitre", new ArrayList<Personne>());
     }
 
-    public void addEmploye(Personne personne){
-        switch (personne.profession){
-            case "Directeur": listeEmploye.get("Directeur").add(personne);
-            case "Secretaire": listeEmploye.get("Secretaire").add(personne);
-            case "Comptable": listeEmploye.get("Comptable").add(personne);
-            case "Maçon Qualifié": listeEmploye.get("Maçon Qualifié").add(personne);
-            case "Macon": listeEmploye.get("Macon").add(personne);
-            case "Manoeuvre": listeEmploye.get("Manoeuvre").add(personne);
-            case "Contremaitre": listeEmploye.get("Contremaitre").add(personne);
+    public HashMap<String, Integer> tailleProfession;
+
+    private void getTailleProfession() {
+        tailleProfession = new HashMap<String, Integer>();
+        tailleProfession.put("Directeur", NB_DIRECTEUR);
+        tailleProfession.put("Secretaire", NB_SECRETAIRE);
+        tailleProfession.put("Comptable", NB_COMPTABLE);
+        tailleProfession.put("Maçon Qualifié", NB_MACONQUALIFIE);
+        tailleProfession.put("Maçon", NB_MACON);
+        tailleProfession.put("Manoeuvre", NB_MANOEUVRE);
+        tailleProfession.put("Contremaitre", NB_CONTREMAITRE);
+    }
+
+    public boolean canAddEmployee(String profession){
+        if (listeEmploye.containsKey(profession)) {
+            if (listeEmploye.get(profession).size() < tailleProfession.get(profession)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+    public void addEmploye(Personne personne) throws Exception {
+        if(canAddEmployee(personne.getProfession())){
+            listeEmploye.get(personne.getProfession()).add(personne);
+        }
+        else{
+            throw new Exception(String.format("Plus de place dans la profession: %s", personne.getProfession()));
         }
     }
 
-    public void addEmploye(Personne personne){
-        if(listeEmploye.containsKey(personne.profession)){
-            listeEmploye.get(personne.profession).add(personne);
-
-        }
-    }
-    public void controleTailleProfession(Personne personne,String profession){
-        if(listeEmploye.containsKey(personne.profession))
-            if(
-
-    }
-
-    public String listEmployeParProfession(String profession){
+    public String listEmployeParProfession(String profession) {
         return listeEmploye.get(profession).toString();
     }
-
 
 }

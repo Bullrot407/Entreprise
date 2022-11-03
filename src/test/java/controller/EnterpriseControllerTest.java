@@ -1,57 +1,28 @@
 package controller;
 
-import factory.EmployeFactory;
 import model.*;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EnterpriseControllerTest {
     EntrepriseController entCont;
+
     @BeforeEach
             void entrepriseControler(){
+
         entCont = new EntrepriseController();
     }
 
-
-
-
-
     @BeforeAll
-    void testFactory(){
-
-
-
-
-
+    static void testFactory(){
 
     }
-
-    @Test
-    void ajouterDirecteur(){
-        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
-    }
-    void ajouterSecretaire(){
-        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
-    }
-    void ajouterMacon(){
-        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
-    }
-    void ajouterMacon(){
-        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
-    }
-    void ajouterMacon(){
-        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
-    }
-    void ajouterMacon(){
-        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
-    }
-/*
-    @Test
+/*    @Test
     void ajouterDirecteur() {
         //verifie si tableau existe
         assertNotNull(entCont.TabPersonnels);
@@ -70,7 +41,63 @@ class EnterpriseControllerTest {
         assertTrue(entCont.TabPersonnels.length > 0);
         assertEquals(7, entCont.TabPersonnels.length);
 
+    }*/
+
+
+
+    @Test
+    void testDirecteur(){
+        entCont.ajouterEmploye("LeMacon", "Bob", "Directeur");
+        assertEquals(entCont.entreprise.listeEmploye.get("Directeur").iterator().next().getPrenom(), "Bob" );
+        assertEquals(entCont.entreprise.listeEmploye.get("Directeur").iterator().next().getNom(), "LeMacon" );
+        assertEquals(entCont.entreprise.listeEmploye.get("Directeur").iterator().next().getProfession(), "Directeur" );
     }
+    @Test
+    void testSecretaire(){
+        entCont.ajouterEmploye("Lebic", "Bobile", "Secretaire");
+        entCont.ajouterEmploye("Lebrun", "Jule", "Secretaire");
+        entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");
+
+        Iterator<Personne> it = entCont.entreprise.listeEmploye.get("Secretaire").iterator();
+        Personne sec1 = it.next();
+        assertEquals(sec1.getPrenom(), "Bobile" );
+        assertEquals(sec1.getNom(), "Lebic" );
+        assertEquals(sec1.getProfession(), "Secretaire" );
+        Personne sec2 = it.next();
+        assertEquals(sec2.getNom(), "Lebrun" );
+        assertEquals(sec2.getPrenom(),"Jule");
+        assertEquals(sec2.getProfession(), "Secretaire" );
+        /*Personne sec3 = it.next();
+        assertEquals(sec3.nom, "Ruelle" );
+        assertEquals(sec3.prenom,"Max");
+        assertEquals(sec3.profession, "Secretaire" );*/
+    }
+
+    @Test
+    void testTooManyEmployee(){
+        entCont.ajouterEmploye("Lebic", "Bobile", "Secretaire");
+        entCont.ajouterEmploye("Lebrun", "Jule", "Secretaire");
+        RuntimeException ex = assertThrows(RuntimeException.class,() -> {entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");});
+        assertEquals(String.format("Plus de place dans la profession: %s", "Secretaire"), ex.getMessage());
+    }
+/*
+    void ajouterSecretaire(){
+        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
+    }
+    void ajouterMacon(){
+        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
+    }
+    void ajouterMacon(){
+        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
+    }
+    void ajouterMacon(){
+        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
+    }
+    void ajouterMacon(){
+        entCont.ajouterEmploye("LeMacon", "Bob", "Macon");
+    }
+
+
 
     int i;
     @Test
@@ -121,8 +148,4 @@ class EnterpriseControllerTest {
         assertTrue(entCont.TabPersonnels.length > 0);
         assertEquals(7, entCont.TabPersonnels.length);
         }*/
-
-    @Test
-    void listerPersonnel() {
-    }
 }

@@ -11,13 +11,16 @@ package model;
             this.porteFeuille = porteFeuille;
         }
 
+        public Directeur(String nom, String prenom) {
+            super(nom, prenom,"Directeur");
+        }
 
 
         @Override
         public String toString() {
-            return "PROFESSION: " + profession  +
-                    " / NOM: " + nom  +
-                    " / PRENOM:  " + prenom +
+            return "PROFESSION: " + getProfession()  +
+                    " / NOM: " + getNom()  +
+                    " / PRENOM:  " + getPrenom() +
                     " / PORTEFEUILLE: " + porteFeuille +
                     " / TRAVAIL: " + travail() +
                     " / LOISIR: " + loisir();

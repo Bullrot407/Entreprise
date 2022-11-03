@@ -4,6 +4,7 @@ public class Comptable extends Personne {
 
 
     public Comptable(String nom, String prenom) {
+
         super(nom, prenom, "Comptable");
     }
 

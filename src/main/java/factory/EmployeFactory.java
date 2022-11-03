@@ -1,23 +1,14 @@
 package factory;
 
 import model.*;
-import model.Personne;
 
 public class EmployeFactory {
 
-    public Personne getDirecteur(String profession, String nom, String prenom, Float portefeuille) {
+    public Personne getPersonne(String nom, String prenom, String profession) {
         if (profession == null) {
             return null;
-        }
-        if (profession.equalsIgnoreCase("directeur")) {
-            return new Directeur(nom, prenom, portefeuille);
-        }
-        return null;
-    }
-
-    public Personne getPersonne(String nom, String prenom,String profession) {
-        if (profession == null) {
-            return null;
+        } else if (profession.equalsIgnoreCase("Directeur")) {
+            return new Directeur(nom,prenom);
         } else if (profession.equalsIgnoreCase("comptable")) {
             return new Comptable(nom, prenom);
         } else if (profession.equalsIgnoreCase("contremaitre")) {
@@ -34,5 +25,12 @@ public class EmployeFactory {
         return null;
     }
 
-
+    public Personne getPersonne(String nom, String prenom, String profession, Float portefeuille) {
+        if (profession == null) {
+            return null;
+        } else if (profession.equalsIgnoreCase("Directeur")) {
+            return new Directeur(nom, prenom, portefeuille);
+        }
+        return null;
+    }
 }
