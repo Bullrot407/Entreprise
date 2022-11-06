@@ -8,9 +8,6 @@ public abstract class Personne implements IPersonne {
     private String prenom;
     private String profession;
 
-    public Personne() {
-
-    }
 
     @Override
     public String toString() {
@@ -27,6 +24,9 @@ public abstract class Personne implements IPersonne {
         this.nom = nom;
         this.prenom = prenom;
         this.profession = profession;
+    }
+    public Personne() {
+
     }
 
     public String getNom() {

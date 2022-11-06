@@ -1,10 +1,12 @@
 package controller;
 
+import Exceptions.EntrepriseException;
 import model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,17 +48,97 @@ class EnterpriseControllerTest {
 
 
     @Test
-    void testDirecteur(){
+    void testDirecteur() throws EntrepriseException {
         entCont.ajouterEmploye("LeMacon", "Bob", "Directeur");
         assertEquals(entCont.entreprise.listeEmploye.get("Directeur").iterator().next().getPrenom(), "Bob" );
         assertEquals(entCont.entreprise.listeEmploye.get("Directeur").iterator().next().getNom(), "LeMacon" );
         assertEquals(entCont.entreprise.listeEmploye.get("Directeur").iterator().next().getProfession(), "Directeur" );
     }
     @Test
-    void testSecretaire(){
+    void testSecretaire() throws EntrepriseException {
         entCont.ajouterEmploye("Lebic", "Bobile", "Secretaire");
         entCont.ajouterEmploye("Lebrun", "Jule", "Secretaire");
-        entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");
+        //entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");
+
+        Iterator<Personne> it = entCont.entreprise.listeEmploye.get("Secretaire").iterator();
+        Personne sec1 = it.next();
+        assertEquals(sec1.getPrenom(), "Bobile" );
+        assertEquals(sec1.getNom(), "Lebic" );
+        assertEquals(sec1.getProfession(), "Secretaire" );
+        Personne sec2 = it.next();
+        assertEquals(sec2.getNom(), "Lebrun" );
+        assertEquals(sec2.getPrenom(),"Jule");
+        assertEquals(sec2.getProfession(), "Secretaire" );
+        /*Personne sec3 = it.next();
+        assertEquals(sec3.nom, "Ruelle" );
+        assertEquals(sec3.prenom,"Max");
+        assertEquals(sec3.profession, "Secretaire" );*/
+    }
+    @Test
+    void testComptable()  throws EntrepriseException{
+        entCont.ajouterEmploye("Lebic", "Bobile", "Comptable");
+        entCont.ajouterEmploye("Lebrun", "Jule", "Comptable");
+        //entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");
+
+        Iterator<Personne> it = entCont.entreprise.listeEmploye.get("Comptable").iterator();
+        Personne sec1 = it.next();
+        assertEquals(sec1.getPrenom(), "Bobile" );
+        assertEquals(sec1.getNom(), "Lebic" );
+        assertEquals(sec1.getProfession(), "Comptable" );
+        Personne sec2 = it.next();
+        assertEquals(sec2.getNom(), "Lebrun" );
+        assertEquals(sec2.getPrenom(),"Jule");
+        assertEquals(sec2.getProfession(), "Comptable" );
+        /*Personne sec3 = it.next();
+        assertEquals(sec3.nom, "Ruelle" );
+        assertEquals(sec3.prenom,"Max");
+        assertEquals(sec3.profession, "Secretaire" );*/
+    }
+    @Test
+    void testSecretaire2() throws EntrepriseException{
+        entCont.ajouterEmploye("Lebic", "Bobile", "Secretaire");
+        entCont.ajouterEmploye("Lebrun", "Jule", "Secretaire");
+        //entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");
+
+        Iterator<Personne> it = entCont.entreprise.listeEmploye.get("Secretaire").iterator();
+        Personne sec1 = it.next();
+        assertEquals(sec1.getPrenom(), "Bobile" );
+        assertEquals(sec1.getNom(), "Lebic" );
+        assertEquals(sec1.getProfession(), "Secretaire" );
+        Personne sec2 = it.next();
+        assertEquals(sec2.getNom(), "Lebrun" );
+        assertEquals(sec2.getPrenom(),"Jule");
+        assertEquals(sec2.getProfession(), "Secretaire" );
+        /*Personne sec3 = it.next();
+        assertEquals(sec3.nom, "Ruelle" );
+        assertEquals(sec3.prenom,"Max");
+        assertEquals(sec3.profession, "Secretaire" );*/
+    }
+    @Test
+    void testSecretaire3() throws EntrepriseException{
+        entCont.ajouterEmploye("Lebic", "Bobile", "Secretaire");
+        entCont.ajouterEmploye("Lebrun", "Jule", "Secretaire");
+        //entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");
+
+        Iterator<Personne> it = entCont.entreprise.listeEmploye.get("Secretaire").iterator();
+        Personne sec1 = it.next();
+        assertEquals(sec1.getPrenom(), "Bobile" );
+        assertEquals(sec1.getNom(), "Lebic" );
+        assertEquals(sec1.getProfession(), "Secretaire" );
+        Personne sec2 = it.next();
+        assertEquals(sec2.getNom(), "Lebrun" );
+        assertEquals(sec2.getPrenom(),"Jule");
+        assertEquals(sec2.getProfession(), "Secretaire" );
+        /*Personne sec3 = it.next();
+        assertEquals(sec3.nom, "Ruelle" );
+        assertEquals(sec3.prenom,"Max");
+        assertEquals(sec3.profession, "Secretaire" );*/
+    }
+    @Test
+    void testSecretaire4() throws EntrepriseException{
+        entCont.ajouterEmploye("Lebic", "Bobile", "Secretaire");
+        entCont.ajouterEmploye("Lebrun", "Jule", "Secretaire");
+        //entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");
 
         Iterator<Personne> it = entCont.entreprise.listeEmploye.get("Secretaire").iterator();
         Personne sec1 = it.next();
@@ -74,11 +156,17 @@ class EnterpriseControllerTest {
     }
 
     @Test
-    void testTooManyEmployee(){
+    void testTooManyEmployee() throws EntrepriseException{
         entCont.ajouterEmploye("Lebic", "Bobile", "Secretaire");
         entCont.ajouterEmploye("Lebrun", "Jule", "Secretaire");
-        RuntimeException ex = assertThrows(RuntimeException.class,() -> {entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");});
-        assertEquals(String.format("Plus de place dans la profession: %s", "Secretaire"), ex.getMessage());
+        EntrepriseException ex = assertThrows(EntrepriseException.class,() -> {entCont.ajouterEmploye("Ruelle", "Max", "Secretaire");});
+        assertEquals("Plus de place dans la profession: Secretaire", ex.getMessage());
+    }
+
+    @Test
+    void testProfessionInconnue() throws EntrepriseException{
+        EntrepriseException ex = assertThrows(EntrepriseException.class,() -> {entCont.ajouterEmploye("Ruelle", "Max", "Brol");});
+        assertEquals("La profession \"Brol\" demandée n'existe pas!!!", ex.getMessage());
     }
 /*
     void ajouterSecretaire(){

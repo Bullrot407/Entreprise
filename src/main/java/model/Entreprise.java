@@ -1,5 +1,7 @@
 package model;
 
+import Exceptions.EntrepriseException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -44,7 +46,16 @@ public class Entreprise {
         tailleProfession.put("Contremaitre", NB_CONTREMAITRE);
     }
 
-    public boolean canAddEmployee(String profession){
+
+    public void ajouterEmploye(Personne personne) throws EntrepriseException {
+        if(peuxAjouterEmploye(personne.getProfession())){
+            listeEmploye.get(personne.getProfession()).add(personne);
+        }
+        else{
+            throw new EntrepriseException(String.format("Plus de place dans la profession: %s", personne.getProfession()));
+        }
+    }
+    public boolean peuxAjouterEmploye(String profession){
         if (listeEmploye.containsKey(profession)) {
             if (listeEmploye.get(profession).size() < tailleProfession.get(profession)) {
                 return true;
@@ -56,15 +67,6 @@ public class Entreprise {
             return false;
         }
     }
-    public void addEmploye(Personne personne) throws Exception {
-        if(canAddEmployee(personne.getProfession())){
-            listeEmploye.get(personne.getProfession()).add(personne);
-        }
-        else{
-            throw new Exception(String.format("Plus de place dans la profession: %s", personne.getProfession()));
-        }
-    }
-
     public String listEmployeParProfession(String profession) {
         return listeEmploye.get(profession).toString();
     }
