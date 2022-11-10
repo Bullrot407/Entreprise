@@ -46,29 +46,40 @@ public class Entreprise {
         tailleProfession.put("Contremaitre", NB_CONTREMAITRE);
     }
 
-
     public void ajouterEmploye(Personne personne) throws EntrepriseException {
-        if(peuxAjouterEmploye(personne.getProfession())){
+        if (peuxAjouterEmploye(personne.getProfession())) {
             listeEmploye.get(personne.getProfession()).add(personne);
-        }
-        else{
-            throw new EntrepriseException(String.format("Plus de place dans la profession: %s", personne.getProfession()));
+        } else {
+            throw new EntrepriseException(String.format("Une erreur inatendue est survenur avec la profession: %s", personne.getProfession()));
         }
     }
-    public boolean peuxAjouterEmploye(String profession){
+    public boolean peuxAjouterEmploye(String profession) throws EntrepriseException {
+        if (controleProfessionExiste(profession));
+        if (listeEmploye.get(profession).size() < tailleProfession.get(profession)) {
+            return true;
+        } else {
+            throw new EntrepriseException(String.format("Plus de place dans la profession: %s", profession));
+        }
+    }
+    public boolean controleProfessionExiste(String profession) throws EntrepriseException {
         if (listeEmploye.containsKey(profession)) {
-            if (listeEmploye.get(profession).size() < tailleProfession.get(profession)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }else {
-            return false;
+            return true;
+        } else throw new EntrepriseException(String.format("Mauvaise profession: %s", profession));
+    }
+
+    public void supprimerEmploye(String profession, Personne personne) throws EntrepriseException {
+        if (controleProfessionExiste(profession)) {
+            listeEmploye.get(personne.getProfession()).remove(personne);
+        } else {
+            throw new EntrepriseException(String.format("Impossible de supprimer la profession: %s", personne.getProfession()));
         }
     }
+
+
+
     public String listEmployeParProfession(String profession) {
         return listeEmploye.get(profession).toString();
     }
+
 
 }

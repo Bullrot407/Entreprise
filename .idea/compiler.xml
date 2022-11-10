@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Entreprise" />
         <module name="Entreprise-master" />
+        <module name="be.ieps.poo.arnaud.entreprise" />
       </profile>
     </annotationProcessing>
   </component>

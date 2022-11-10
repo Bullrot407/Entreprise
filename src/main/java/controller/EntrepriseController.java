@@ -4,8 +4,6 @@ import Exceptions.EntrepriseException;
 import factory.EmployeFactory;
 import model.*;
 
-import java.sql.SQLException;
-
 
 public class EntrepriseController {
     public Entreprise entreprise = new Entreprise();
