@@ -67,11 +67,12 @@ public class Entreprise {
         } else throw new EntrepriseException(String.format("Mauvaise profession: %s", profession));
     }
 
-    public void supprimerEmploye(String profession, Personne personne) throws EntrepriseException {
+    public void supprimerEmploye(String nom, String prenom, String profession) throws EntrepriseException {
         if (controleProfessionExiste(profession)) {
-            listeEmploye.get(personne.getProfession()).remove(personne);
+            listeEmploye.get(profession).remove(nom);
+            listeEmploye.get(profession).remove(prenom);
         } else {
-            throw new EntrepriseException(String.format("Impossible de supprimer la profession: %s", personne.getProfession()));
+            throw new EntrepriseException(String.format("Impossible de supprimer la profession: %s", profession));
         }
     }
 

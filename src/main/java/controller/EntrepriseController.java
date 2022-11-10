@@ -16,7 +16,14 @@ public class EntrepriseController {
         } catch (EntrepriseException ex) {
             throw ex;
         }
+    }
 
+
+    public void supprimerEmploye(String nom, String prenom, String profession) throws EntrepriseException {
+        try {
+            entreprise.supprimerEmploye(nom, prenom,profession);
+        } catch (EntrepriseException ex) {
+        }
 
     }
 }

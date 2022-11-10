@@ -35,6 +35,11 @@ class EnterpriseControllerTest {
         });
         assertEquals("Plus de place dans la profession: Secretaire", ex.getMessage());
     }
+    @Test
+    void testSuppDEmployee() throws EntrepriseException {
+        entCont.supprimerEmploye("Lebic", "Bobile", "Secretaire");
+
+    }
 
     @Test
     void testProfessionInconnue() throws EntrepriseException {
