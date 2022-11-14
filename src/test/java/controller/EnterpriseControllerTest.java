@@ -2,12 +2,18 @@ package controller;
 
 import Exceptions.EntrepriseException;
 import model.Personne;
+import model.Secretaire;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -62,15 +68,56 @@ class EnterpriseControllerTest {
         entCont.ajouterEmploye("Lebic", "Bobile", "Secretaire");
         entCont.ajouterEmploye("Lebrun", "Jule", "Secretaire");
 
-        Iterator<Personne> it = entCont.entreprise.listeEmploye.get("Secretaire").iterator();
-        Personne sec1 = it.next();
-        assertEquals(sec1.getPrenom(), "Bobile");
-        assertEquals(sec1.getNom(), "Lebic");
-        assertEquals(sec1.getProfession(), "Secretaire");
-        Personne sec2 = it.next();
-        assertEquals(sec2.getNom(), "Lebrun");
-        assertEquals(sec2.getPrenom(), "Jule");
-        assertEquals(sec2.getProfession(), "Secretaire");
+//        Iterator<Personne> it = entCont.entreprise.listeEmploye.get("Secretaire").iterator();
+//        Personne sec1 = it.next();
+//        assertEquals(sec1.getPrenom(), "Bobile");
+//        assertEquals(sec1.getNom(), "Lebic");
+//        assertEquals(sec1.getProfession(), "Secretaire");
+//        Personne sec2 = it.next();
+//        assertEquals(sec2.getNom(), "Lebrun");
+//        assertEquals(sec2.getPrenom(), "Jule");
+//        assertEquals(sec2.getProfession(), "Secretaire");
+
+        List<Secretaire> expectedSecretaireList = Arrays.asList(
+            new Secretaire("Lebic", "Bobile"),
+            new Secretaire("Lebrun", "Jule")
+        );
+
+        ArrayList<Personne> actualSecretaireList = entCont.entreprise.listeEmploye.get("Secretaire");
+        assertEquals( expectedSecretaireList, actualSecretaireList );
+    }
+
+    @Test
+    void testSecretaireHamcrest() throws EntrepriseException {
+        entCont.ajouterEmploye("Lebic", "Bobile", "Secretaire");
+        entCont.ajouterEmploye("Lebrun", "Jule", "Secretaire");
+
+//        Iterator<Personne> it = entCont.entreprise.listeEmploye.get("Secretaire").iterator();
+//        Personne sec1 = it.next();
+//        assertEquals(sec1.getPrenom(), "Bobile");
+//        assertEquals(sec1.getNom(), "Lebic");
+//        assertEquals(sec1.getProfession(), "Secretaire");
+//        Personne sec2 = it.next();
+//        assertEquals(sec2.getNom(), "Lebrun");
+//        assertEquals(sec2.getPrenom(), "Jule");
+//        assertEquals(sec2.getProfession(), "Secretaire");
+
+        ArrayList<Personne> actualSecretaireList = entCont.entreprise.listeEmploye.get("Secretaire");
+
+        assertThat( actualSecretaireList, contains(
+                allOf(
+                    hasProperty("prenom", equalTo("Bobile")),
+                    hasProperty("nom", equalTo("Lebic")),
+                    hasProperty("profession", equalTo("Secretaire"))
+                ),
+                allOf(
+                        hasProperty("prenom", equalTo("Jule")),
+                        hasProperty("nom", equalTo("Lebrun")),
+                        hasProperty("profession", equalTo("Secretaire"))
+                )
+        ) );
+
+
     }
 
     @Test
